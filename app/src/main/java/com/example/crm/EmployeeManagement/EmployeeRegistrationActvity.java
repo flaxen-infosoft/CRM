@@ -12,7 +12,11 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 
 import com.example.crm.CRMManagement.CRM_RegisterActivity;
+import com.example.crm.Model.Candidate;
+import com.example.crm.Model.Employee;
 import com.example.crm.R;
+import com.example.crm.Retro.RetroInterface;
+import com.example.crm.Retro.Retrofi;
 import com.example.crm.citystate.Cities;
 import com.example.crm.citystate.Rinterface;
 import com.example.crm.citystate.object;
@@ -113,6 +117,23 @@ public class EmployeeRegistrationActvity extends AppCompatActivity {
 
     }
 
+    private void EmployeeRegister(Employee employee){
+        RetroInterface retroInterface= Retrofi.initretro().create(RetroInterface.class);
+        Call<Employee> call=retroInterface.addEmployee(employee);
+        call.enqueue(new Callback<Employee>() {
+            @Override
+            public void onResponse(Call<Employee> call, Response<Employee> response) {
+                if (!response.isSuccessful()) {
+                    System.out.println(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Employee> call, Throwable t) {
+                System.out.println(t.getMessage());
+            }
+        });
+    }
     private List<String> removeDuplicates(List<String> stateList) {
         List<String> statesList = new ArrayList<>();
         for (String state : stateList) {
