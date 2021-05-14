@@ -179,23 +179,7 @@ public class CandidateRegistration extends AppCompatActivity  {
         }
     }
 
-    private void CandidateRegister(Candidate candidate) {
-        RetroInterface retroInterface = Retrofi.initretro().create(RetroInterface.class);
-        Call<Candidate> call = retroInterface.addCandidate(candidate);
-        call.enqueue(new Callback<Candidate>() {
-            @Override
-            public void onResponse(Call<Candidate> call, Response<Candidate> response) {
-                if (!response.isSuccessful()) {
-                    System.out.println(response.code());
-                }
-            }
 
-    @Override
-    public void onFailure(Call<Candidate> call, Throwable t) {
-        System.out.println(t.getMessage());
-    }
-});
-}
     private List<String> removeDuplicates(List<String> stateList) {
         List<String> statesList = new ArrayList<>();
         for (String state : stateList) {
