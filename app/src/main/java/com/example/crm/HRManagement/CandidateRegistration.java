@@ -1,7 +1,5 @@
 package com.example.crm.HRManagement;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.crm.Model.Candidate;
 import com.example.crm.R;
@@ -118,22 +119,76 @@ public class CandidateRegistration extends AppCompatActivity  {
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CandidateRegistration.this, CandidateRemark.class);
-                startActivity(intent);
+                Check();
             }
         });
 
     }
-private void CandidateRegister(Candidate candidate){
-    RetroInterface retroInterface= Retrofi.initretro().create(RetroInterface.class);
-Call<Candidate> call=retroInterface.addCandidate(candidate);
-call.enqueue(new Callback<Candidate>() {
-    @Override
-    public void onResponse(Call<Candidate> call, Response<Candidate> response) {
-        if (!response.isSuccessful()) {
-            System.out.println(response.code());
+
+    private void Check() {
+        String canname = name.getText().toString();
+        String canphone = phone.getText().toString();
+        String canpersonalemail = personal_email.getText().toString();
+        String canaltphone = alt_phone.getText().toString();
+        String canofficialemail = official_email.getText().toString();
+        String canaddress = address.getText().toString();
+        String cansource = source.getText().toString();
+        String canstate = state.getSelectedItem().toString();
+        String cancity = city.getSelectedItem().toString();
+        if (canphone.length() != 10) {
+            phone.setError("Please Enter Valid Phone Number ");
+            phone.requestFocus();
+        } else if (canname.isEmpty()) {
+            name.setError("Please Enter  Name");
+            name.requestFocus();
+        } else if (!canpersonalemail.contains("@")) {
+            personal_email.setError("Please Enter a Valid Email Address");
+            personal_email.requestFocus();
+        } else if (canaddress.isEmpty()) {
+            address.setError("Please Enter a Address");
+            address.requestFocus();
+
+        } else if (cansource.isEmpty()) {
+            source.setError("Please Enter Your Password");
+            source.requestFocus();
+
+        } else if (!canofficialemail.contains("@")) {
+            official_email.setError("Please Enter a Valid Email Address");
+            official_email.requestFocus();
+        } else if (canaltphone.length() != 10) {
+            alt_phone.setError("Please Enter Valid Phone Number ");
+            alt_phone.requestFocus();
+        } else if (canstate.contains("Select State")) {
+            Toast.makeText(this, "Please Select State", Toast.LENGTH_SHORT).show();
+        } else if (cancity.contains("Select City")) {
+            Toast.makeText(this, "Please Select City", Toast.LENGTH_SHORT).show();
+        } else {
+            Bundle bundle = new Bundle();
+            bundle.putString("personalemail", canpersonalemail);
+            bundle.putString("officialemail", canofficialemail);
+            bundle.putString("source", cansource);
+            bundle.putString("address", canaddress);
+            bundle.putString("altphone", canaltphone);
+            bundle.putString("phone", canphone);
+            bundle.putString("name", canname);
+            bundle.putString("state", canstate);
+            bundle.putString("city", cancity);
+            Intent intent = new Intent(CandidateRegistration.this, CandidateRemark.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
         }
     }
+
+    private void CandidateRegister(Candidate candidate) {
+        RetroInterface retroInterface = Retrofi.initretro().create(RetroInterface.class);
+        Call<Candidate> call = retroInterface.addCandidate(candidate);
+        call.enqueue(new Callback<Candidate>() {
+            @Override
+            public void onResponse(Call<Candidate> call, Response<Candidate> response) {
+                if (!response.isSuccessful()) {
+                    System.out.println(response.code());
+                }
+            }
 
     @Override
     public void onFailure(Call<Candidate> call, Throwable t) {
