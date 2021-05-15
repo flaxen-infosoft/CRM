@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,6 +31,7 @@ import retrofit2.Response;
 public class CandidateRemark extends AppCompatActivity {
 
     Button updatebt, dateofinterviewbt;
+    EditText designation;
     Spinner spin_department, spin_status;
     RadioButton job, intern, laptopyes, laptopno;
     String startdate, appliedfor, havelaptop;
@@ -43,6 +46,7 @@ public class CandidateRemark extends AppCompatActivity {
         updatebt = findViewById(R.id.candidate_remark_resume);
         spin_department = findViewById(R.id.department);
         spin_status = findViewById(R.id.status);
+        designation=findViewById(R.id.candidate_designation);
         laptopyes = findViewById(R.id.yes);
         laptopno = findViewById(R.id.no);
         job = findViewById(R.id.job);
@@ -78,8 +82,20 @@ public class CandidateRemark extends AppCompatActivity {
             } else {
                 havelaptop = "no";
             }
-            Intent intent = new Intent(CandidateRemark.this, PaySlipFormActivity.class);
-            startActivity(intent);
+            Candidate candidate= new Candidate();
+            candidate.setName(bundle.getString("name"));
+            candidate.setAddress(bundle.getString("address"));
+            candidate.setAltphone(bundle.getString("altphone"));
+            candidate.setState(bundle.getString("state"));
+            candidate.setCity(bundle.getString("city"));
+            candidate.setPhone(bundle.getString("phone"));
+            candidate.setSource(bundle.getString("source"));
+            candidate.setPid(bundle.getString("personalemail"));
+            candidate.setOid(bundle.getString("officialemail"));
+            candidate.setDesignation(designation.getText().toString());
+            candidate.setHave_laptop(havelaptop);
+            candidate.setApplied_for(appliedfor);
+           CandidateRegister(candidate);
         });
 
     }
