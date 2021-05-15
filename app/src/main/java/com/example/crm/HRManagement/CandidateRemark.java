@@ -95,7 +95,10 @@ public class CandidateRemark extends AppCompatActivity {
             candidate.setDesignation(designation.getText().toString());
             candidate.setHave_laptop(havelaptop);
             candidate.setApplied_for(appliedfor);
-           CandidateRegister(candidate);
+            candidate.setDateof_interview(startdate);
+            System.out.println("candidate = " + candidate);
+            CandidateRegister(candidate);
+
         });
 
     }
