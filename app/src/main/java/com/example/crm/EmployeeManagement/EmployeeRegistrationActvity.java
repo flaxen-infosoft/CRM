@@ -1,18 +1,18 @@
 package com.example.crm.EmployeeManagement;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
-import com.example.crm.CRMManagement.CRM_RegisterActivity;
-import com.example.crm.Model.Candidate;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.crm.Model.Employee;
 import com.example.crm.R;
 import com.example.crm.Retro.RetroInterface;
@@ -20,11 +20,12 @@ import com.example.crm.Retro.Retrofi;
 import com.example.crm.citystate.Cities;
 import com.example.crm.citystate.Rinterface;
 import com.example.crm.citystate.object;
-import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,27 +37,46 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class EmployeeRegistrationActvity extends AppCompatActivity {
 
-    Spinner stateSpin, citySpin, genderSpin;
+    Spinner stateSpin, citySpin, genderSpin, statusspin, departmentspin;
     List<String> stateList = new ArrayList<>();
     List<String> cityList = new ArrayList<>();
-    Button register;
+    Button register, dojbt;
     RadioButton job, intern;
+    EditText empname, empdesignation, phoneno, offid, personalid, password;
     ExpandableLayout expandablemycontent, expandableinterncontent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employee_registration_actvity);
-
+        empname = findViewById(R.id.empregname);
+        empdesignation = findViewById(R.id.empdesignation);
+        phoneno = findViewById(R.id.empphoneno);
+        offid = findViewById(R.id.candidate_personal_email);
+        personalid = findViewById(R.id.candidate_official_email);
+        password = findViewById(R.id.emppassword);
         stateSpin = findViewById(R.id.state);
         citySpin = findViewById(R.id.city);
         register = findViewById(R.id.btn_register);
         job = findViewById(R.id.job);
         intern = findViewById(R.id.intern);
         genderSpin = findViewById(R.id.gender);
-
+        dojbt = findViewById(R.id.employee_dojbt);
+        dojbt.setOnClickListener(view -> {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(EmployeeRegistrationActvity.this, (datePicker, i, i1, i2) -> {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MMMM/yyyy");
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(i, i1, i2);
+                String startdate = sdf.format(calendar.getTime());
+                dojbt.setText(startdate);
+            }, Calendar.getInstance().get(Calendar.YEAR),
+                    Calendar.getInstance().get(Calendar.MONTH),
+                    Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+            datePickerDialog.setTitle("start date");
+            datePickerDialog.show();
+        });
         register.setOnClickListener(v -> {
-            Intent intent =  new Intent(EmployeeRegistrationActvity.this, EmployeeRegisterSecondActivity.class);
+            Intent intent = new Intent(EmployeeRegistrationActvity.this, EmployeeRegisterSecondActivity.class);
             startActivity(intent);
         });
 

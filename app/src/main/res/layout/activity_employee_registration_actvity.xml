@@ -377,7 +377,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/candidate_phone"
+                android:id="@+id/empdesignation"
                 android:layout_below="@+id/candidate_name"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
@@ -410,7 +410,7 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/candidate_alt_phone"
+                        android:id="@+id/empphoneno"
                         android:layout_below="@+id/txtphone"
                         android:layout_marginRight="5dp"
                         android:layout_marginTop="10dp"
@@ -446,6 +446,7 @@
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/edittext_bg"
                         android:padding="13dp"
+                        android:id="@+id/employee_dojbt"
                         android:textSize="15sp"
                         app:backgroundTint="@color/lightgrey"
                         android:inputType="text"
@@ -535,7 +536,7 @@
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/candidate_personal_email"
-                android:layout_below="@+id/candidate_alt_phone"
+                android:layout_below="@+id/empphoneno"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="15dp"
@@ -602,7 +603,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/candidate_state"
+                android:id="@+id/emppassword"
                 android:layout_below="@+id/candidate_city"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
