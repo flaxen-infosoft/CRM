@@ -10,9 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.crm.HRManagement.CandidateRegistration;
+import com.example.crm.HRManagement.CandidateRemark;
 import com.example.crm.Model.Employee;
 import com.example.crm.R;
 import com.example.crm.Retro.RetroInterface;
@@ -138,6 +141,53 @@ public class EmployeeRegistrationActvity extends AppCompatActivity {
 
     }
 
+    private void Check() {
+        String canname = empname.getText().toString();
+        String canphone = phoneno.getText().toString();
+        String canpersonalemail = personalid.getText().toString();
+        String canpassword = password.getText().toString();
+        String canofficialemail = offid.getText().toString();
+        String candesignation = empdesignation.getText().toString();
+        String canstate = stateSpin.getSelectedItem().toString();
+        String cancity = citySpin.getSelectedItem().toString();
+        if (canphone.length() != 10) {
+            phoneno.setError("Please Enter Valid Phone Number ");
+            phoneno.requestFocus();
+        } else if (canname.isEmpty()) {
+            empname.setError("Please Enter  Name");
+            empname.requestFocus();
+        } else if (!canpersonalemail.contains("@")) {
+            personalid.setError("Please Enter a Valid Email Address");
+            personalid.requestFocus();
+        } else if (candesignation.isEmpty()) {
+            empdesignation.setError("Please Enter Designation");
+            empdesignation.requestFocus();
+
+        }  else if (!canofficialemail.contains("@")) {
+            offid.setError("Please Enter a Valid Email Address");
+            offid.requestFocus();
+        } else if (canpassword.isEmpty()) {
+            password.setError("Please Enter password");
+            password.requestFocus();
+        } else if (canstate.contains("Select State")) {
+            Toast.makeText(this, "Please Select State", Toast.LENGTH_SHORT).show();
+        } else if (cancity.contains("Select City")) {
+            Toast.makeText(this, "Please Select City", Toast.LENGTH_SHORT).show();
+        } else {
+            Bundle bundle = new Bundle();
+            bundle.putString("personalemail", canpersonalemail);
+            bundle.putString("officialemail", canofficialemail);
+            bundle.putString("address", candesignation);
+            bundle.putString("password", canpassword);
+            bundle.putString("phone", canphone);
+            bundle.putString("name", canname);
+            bundle.putString("state", canstate);
+            bundle.putString("city", cancity);
+            Intent intent = new Intent(EmployeeRegistrationActvity.this, EmployeeRegisterSecondActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
+    }
     private void EmployeeRegister(Employee employee){
         RetroInterface retroInterface= Retrofi.initretro().create(RetroInterface.class);
         Call<Employee> call=retroInterface.addEmployee(employee);
