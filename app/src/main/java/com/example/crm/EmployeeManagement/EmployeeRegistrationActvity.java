@@ -37,7 +37,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class EmployeeRegistrationActvity extends AppCompatActivity {
 
-    Spinner stateSpin, citySpin, genderSpin, statusspin, departmentspin;
+    Spinner stateSpin, citySpin, genderSpin, statusspin;
     List<String> stateList = new ArrayList<>();
     List<String> cityList = new ArrayList<>();
     Button register, dojbt;
@@ -55,6 +55,7 @@ public class EmployeeRegistrationActvity extends AppCompatActivity {
         offid = findViewById(R.id.candidate_personal_email);
         personalid = findViewById(R.id.candidate_official_email);
         password = findViewById(R.id.emppassword);
+        statusspin=findViewById(R.id.employee_status);
         stateSpin = findViewById(R.id.state);
         citySpin = findViewById(R.id.city);
         register = findViewById(R.id.btn_register);
