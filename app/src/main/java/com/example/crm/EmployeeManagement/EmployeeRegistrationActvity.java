@@ -44,8 +44,9 @@ public class EmployeeRegistrationActvity extends AppCompatActivity {
     List<String> stateList = new ArrayList<>();
     List<String> cityList = new ArrayList<>();
     Button register, dojbt;
+    String startdate;
     RadioButton job, intern;
-    EditText empname, empdesignation, phoneno, offid, personalid, password;
+    EditText empname, empdesignation, phoneno, offid, personalid, password, jobamount;
     ExpandableLayout expandablemycontent, expandableinterncontent;
 
     @Override
@@ -55,6 +56,7 @@ public class EmployeeRegistrationActvity extends AppCompatActivity {
         empname = findViewById(R.id.empregname);
         empdesignation = findViewById(R.id.empdesignation);
         phoneno = findViewById(R.id.empphoneno);
+        jobamount=findViewById(R.id.jobamount);
         offid = findViewById(R.id.candidate_personal_email);
         personalid = findViewById(R.id.candidate_official_email);
         password = findViewById(R.id.emppassword);
@@ -71,7 +73,7 @@ public class EmployeeRegistrationActvity extends AppCompatActivity {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MMMM/yyyy");
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(i, i1, i2);
-                String startdate = sdf.format(calendar.getTime());
+                startdate = sdf.format(calendar.getTime());
                 dojbt.setText(startdate);
             }, Calendar.getInstance().get(Calendar.YEAR),
                     Calendar.getInstance().get(Calendar.MONTH),
@@ -150,6 +152,7 @@ public class EmployeeRegistrationActvity extends AppCompatActivity {
         String candesignation = empdesignation.getText().toString();
         String canstate = stateSpin.getSelectedItem().toString();
         String cancity = citySpin.getSelectedItem().toString();
+        String cangender = genderSpin.getSelectedItem().toString();
         if (canphone.length() != 10) {
             phoneno.setError("Please Enter Valid Phone Number ");
             phoneno.requestFocus();
@@ -181,8 +184,10 @@ public class EmployeeRegistrationActvity extends AppCompatActivity {
             bundle.putString("password", canpassword);
             bundle.putString("phone", canphone);
             bundle.putString("name", canname);
+            bundle.putString("doj", startdate );
             bundle.putString("state", canstate);
             bundle.putString("city", cancity);
+            bundle.putString("gender", cangender);
             Intent intent = new Intent(EmployeeRegistrationActvity.this, EmployeeRegisterSecondActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
